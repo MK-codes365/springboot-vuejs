@@ -1,6 +1,6 @@
-package de.jonashackt.springbootvuejs.repository;
+package com.mukutkumar.springbootvuejs.repository;
 
-import de.jonashackt.springbootvuejs.domain.User;
+import com.mukutkumar.springbootvuejs.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +22,13 @@ public class UserRepositoryTest {
     private UserRepository users;
 
     private final User norbertSiegmund = new User("Norbert", "Siegmund");
-    private final User jonasHecht = new User("Jonas", "Hecht");
+    private final User mukutKumar = new User("Mukut", "Kumar");
 
     @BeforeEach
     public void fillSomeDataIntoOurDb() {
         // Add new Users to Database
         entityManager.persist(norbertSiegmund);
-        entityManager.persist(jonasHecht);
+        entityManager.persist(mukutKumar);
     }
 
     @Test
@@ -43,9 +43,9 @@ public class UserRepositoryTest {
     @Test
     public void testFindByFirstName() throws Exception {
         // Search for specific User in Database according to firstname
-        List<User> usersWithFirstNameJonas = users.findByFirstName("Jonas");
+        List<User> usersWithFirstNameMukut = users.findByFirstName("Mukut");
 
-        assertThat(usersWithFirstNameJonas, contains(jonasHecht));
+        assertThat(usersWithFirstNameMukut, contains(mukutKumar));
     }
 
 }

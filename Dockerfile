@@ -12,7 +12,7 @@ RUN mvn clean install -DskipTests
 # 2. Lightweight Temurin JRE runtime image (with patched Linux cgroups v2 support)
 FROM eclipse-temurin:17-jre-jammy
 
-LABEL maintainer="Jonas Hecht"
+LABEL maintainer="Mukut Kumar"
 
 VOLUME /tmp
 

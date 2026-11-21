@@ -1,4 +1,4 @@
-package de.jonashackt.springbootvuejs.configuration;
+package com.mukutkumar.springbootvuejs.configuration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

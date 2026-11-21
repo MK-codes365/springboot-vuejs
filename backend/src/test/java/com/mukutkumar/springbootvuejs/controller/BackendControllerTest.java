@@ -1,7 +1,7 @@
-package de.jonashackt.springbootvuejs.controller;
+package com.mukutkumar.springbootvuejs.controller;
 
-import de.jonashackt.springbootvuejs.SpringBootVuejsApplication;
-import de.jonashackt.springbootvuejs.domain.User;
+import com.mukutkumar.springbootvuejs.SpringBootVuejsApplication;
+import com.mukutkumar.springbootvuejs.domain.User;
 import io.restassured.RestAssured;
 import org.apache.http.HttpStatus;
 import org.junit.jupiter.api.BeforeEach;

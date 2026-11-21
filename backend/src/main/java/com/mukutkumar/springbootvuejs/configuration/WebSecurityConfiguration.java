@@ -1,4 +1,4 @@
-package de.jonashackt.springbootvuejs.configuration;
+package com.mukutkumar.springbootvuejs.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

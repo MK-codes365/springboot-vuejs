@@ -1,9 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ hellomsg }}</h1>
-    <h2>See the sources here: </h2>
+    <h2>Project by Mukut Kumar</h2>
     <ul>
-      <li><a href="https://github.com/jonashackt/spring-boot-vuejs" target="_blank">github.com/jonashackt/spring-boot-vuejs</a></li>
+      <li><a href="https://github.com/MK-codes365/springboot-vuejs" target="_blank">github.com/MK-codes365/springboot-vuejs</a></li>
     </ul>
     <h3>This site contains more stuff :)</h3>
     <ul>
