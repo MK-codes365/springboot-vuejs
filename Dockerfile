@@ -1,27 +1,23 @@
 # Docker multi-stage build
 
-# 1. Building the App with Maven
-FROM maven:3-jdk-11
+# 1. Building the App with Maven and Temurin 17
+FROM maven:3.9-eclipse-temurin-17 AS build
 
-ADD . /springbootvuejs
 WORKDIR /springbootvuejs
+COPY . .
 
-# Just echo so we can see, if everything is there :)
-RUN ls -l
+# Run Maven build (skip tests for faster container build)
+RUN mvn clean install -DskipTests
 
-# Run Maven build
-RUN mvn clean install
+# 2. Lightweight Temurin JRE runtime image (with patched Linux cgroups v2 support)
+FROM eclipse-temurin:17-jre-jammy
 
-
-# Just using the build artifact and then removing the build-container
-FROM openjdk:17.0.2-jdk
-
-MAINTAINER Jonas Hecht
+LABEL maintainer="Jonas Hecht"
 
 VOLUME /tmp
 
 # Add Spring Boot app.jar to Container
-COPY --from=0 "/springbootvuejs/backend/target/backend-0.0.1-SNAPSHOT.jar" app.jar
+COPY --from=build /springbootvuejs/backend/target/backend-*.jar app.jar
 
 ENV JAVA_OPTS=""
 
