@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: spring-boot-backend
+    env: docker
+    plan: free
+    dockerfilePath: Dockerfile
+    healthCheckPath: /actuator/health
+    envVars:
+      - key: PORT
+        value: 8098

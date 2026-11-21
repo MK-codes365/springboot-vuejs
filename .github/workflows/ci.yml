@@ -1,0 +1,84 @@
+name: CI / CD Build & Test
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test Full Application
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package.json
+
+      - name: Grant Execute Permission to Maven Wrapper
+        run: chmod +x mvnw
+
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm install --legacy-peer-deps
+
+      - name: Run Frontend Unit Tests
+        working-directory: frontend
+        run: npm run test:unit
+
+      - name: Build Full App & Run Backend Tests (Maven)
+        run: ./mvnw clean install -B
+
+      - name: Upload Spring Boot Executable JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot-vuejs-jar
+          path: backend/target/backend-*.jar
+          retention-days: 14
+
+      - name: Upload Test & Coverage Reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-reports
+          path: |
+            backend/target/surefire-reports/
+            backend/target/site/jacoco/
+            frontend/coverage/
+          retention-days: 7
+
+  docker-build:
+    name: Docker Build Verification
+    runs-on: ubuntu-latest
+    needs: build-and-test
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build Docker Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: false
+          tags: spring-boot-vuejs:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

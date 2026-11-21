@@ -1,0 +1,17 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vue",
+  "buildCommand": "cd frontend && npm run build",
+  "outputDirectory": "frontend/target/dist",
+  "installCommand": "cd frontend && npm install --legacy-peer-deps",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://YOUR_BACKEND_URL.onrender.com/api/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
